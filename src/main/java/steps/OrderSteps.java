@@ -6,7 +6,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import pojo.CreateOrder;
+import pojo.Order;
 
 import static io.restassured.RestAssured.given;
 
@@ -18,7 +18,7 @@ public class OrderSteps {
             .build();
 
     @Step("Создание заказа")
-    public static Response createOrder(CreateOrder body) {
+    public static Response createOrder(Order body) {
         return given()
                 .spec(REQUEST_SPECIFICATION)
                 .body(body)

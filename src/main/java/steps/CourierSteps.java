@@ -6,7 +6,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import pojo.CreatingCourier;
+import pojo.Courier;
 import pojo.LoginCourier;
 
 import static io.restassured.RestAssured.given;
@@ -19,7 +19,7 @@ public class CourierSteps {
             .build();
 
     @Step("Создание курьера")
-    public static Response createCourier(CreatingCourier body) {
+    public static Response createCourier(Courier body) {
         return given()
                 .spec(REQUEST_SPECIFICATION)
                 .body(body)
@@ -34,5 +34,16 @@ public class CourierSteps {
                 .body(body)
                 .when()
                 .post("/login");
+    }
+
+    @Step("Удаление курьера")
+    public static Response deleteCourier(int id) {
+        return given()
+                .spec(REQUEST_SPECIFICATION)
+                .log().all()
+                .body(id)
+                .when()
+                .log().all()
+                .delete("/" + id);
     }
 }

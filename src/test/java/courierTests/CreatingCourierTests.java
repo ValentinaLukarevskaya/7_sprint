@@ -1,14 +1,16 @@
 package courierTests;
 
-import generatingClasses.GeneratingCourier;
+import generatingclasses.GeneratingCourier;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
+import org.junit.After;
 import org.junit.Test;
-import pojo.CreatingCourier;
+import pojo.Courier;
 import steps.CourierSteps;
 
 import static org.hamcrest.core.IsEqual.equalTo;
+import static steps.CourierSteps.deleteCourier;
 
 @DisplayName("Создание  курьера")
 public class CreatingCourierTests {
@@ -20,7 +22,7 @@ public class CreatingCourierTests {
     @DisplayName("Создание нового курьера с корректными данными")
     @Description("Ожидаемый код ответа: 201")
     public void creatingCourierWithRightValueParams() {
-        CreatingCourier request = GeneratingCourier.getNewCourier();
+        Courier request = GeneratingCourier.getNewCourier();
         Response response = CourierSteps.createCourier(request);
 
         response.then()
@@ -33,7 +35,7 @@ public class CreatingCourierTests {
     @DisplayName("Создание нового курьера с корректными данными, без поля 'firstName")
     @Description("Ожидаемый код ответа: 201")
     public void createCourierWithoutFirstName() {
-        CreatingCourier request = GeneratingCourier.getNewCourierWithFirstNameNull();
+        Courier request = GeneratingCourier.getNewCourierWithFirstNameNull();
         Response response = CourierSteps.createCourier(request);
 
         response.then()
@@ -46,7 +48,7 @@ public class CreatingCourierTests {
     @DisplayName("Создание нового курьера с корректными данными, без поля 'login")
     @Description("Ожидаемый код ответа: 400")
     public void createCourierWithoutLogin() {
-        CreatingCourier request = GeneratingCourier.getNewCourierWithLoginNull();
+        Courier request = GeneratingCourier.getNewCourierWithLoginNull();
         Response response = CourierSteps.createCourier(request);
 
         response.then()
@@ -59,7 +61,7 @@ public class CreatingCourierTests {
     @DisplayName("Создание нового курьера с корректными данными, без поля 'password")
     @Description("Ожидаемый код ответа: 400")
     public void creatingNewCourierWithoutPassword() {
-        CreatingCourier request = GeneratingCourier.getNewCourierWithPasswordNull();
+        Courier request = GeneratingCourier.getNewCourierWithPasswordNull();
         Response response = CourierSteps.createCourier(request);
 
         response.then()
@@ -72,7 +74,7 @@ public class CreatingCourierTests {
     @DisplayName("Создание двух идентичных курьеров")
     @Description("Ожидаемый код ответа: 409")
     public void createTwoEqualCourier() {
-        CreatingCourier request = GeneratingCourier.getNewCourierWithFirstNameNull();
+        Courier request = GeneratingCourier.getNewCourierWithFirstNameNull();
         Response response = CourierSteps.createCourier(request);
 
         response.then()

@@ -1,6 +1,6 @@
 package orderTests;
 
-import generatingClasses.GeneratingOrder;
+import generatingclasses.GeneratingOrder;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import pojo.CreateOrder;
+import pojo.Order;
 import steps.OrderSteps;
 
 import java.util.Arrays;
@@ -39,7 +39,7 @@ public class CreateOrderTests {
     @DisplayName("Создание заказа с параметризацией")
     @Description("Ожидаемый код ответа: 201")
     public void createOrderWithParam() {
-        CreateOrder request = GeneratingOrder.getNewOrder(colorsOfOrder);
+        Order request = GeneratingOrder.getNewOrder(colorsOfOrder);
         Response response = OrderSteps.createOrder(request);
 
         response.then()

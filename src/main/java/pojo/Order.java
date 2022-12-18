@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateOrder {
+public class Order {
     private String firstName;
     private String lastName;
     private String address;
