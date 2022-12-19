@@ -1,4 +1,4 @@
-package courierTests;
+package couriertests;
 
 import generatingclasses.GeneratingCourier;
 import io.qameta.allure.Description;

@@ -1,4 +1,4 @@
-package courierTests;
+package couriertests;
 
 import generatingclasses.GeneratingCourier;
 import io.qameta.allure.Description;
@@ -7,9 +7,11 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Test;
 import pojo.Courier;
+import pojo.LoginCourier;
 import steps.CourierSteps;
 
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static steps.CourierSteps.deleteCourier;
 
 @DisplayName("Создание  курьера")
@@ -18,6 +20,7 @@ public class CreatingCourierTests {
     public static final String REGISTER_ERROR_400 = "Недостаточно данных для создания учетной записи";
     public static final String REGISTER_ERROR_409 = "Этот логин уже используется";
 
+    int id;
     @Test
     @DisplayName("Создание нового курьера с корректными данными")
     @Description("Ожидаемый код ответа: 201")
@@ -29,6 +32,14 @@ public class CreatingCourierTests {
                 .statusCode(201)
                 .and()
                 .assertThat().body("ok", equalTo(true));
+        Response loginResponse = CourierSteps.loginCourier((new LoginCourier(request.getLogin(), request.getPassword())));
+
+        id = loginResponse.then()
+                .statusCode(200)
+                .and()
+                .assertThat().body("id", notNullValue())
+                .extract().path("id");
+
     }
 
     @Test
@@ -42,6 +53,14 @@ public class CreatingCourierTests {
                 .statusCode(201)
                 .and()
                 .assertThat().body("ok", equalTo(true));
+
+        Response loginResponse = CourierSteps.loginCourier((new LoginCourier(request.getLogin(), request.getPassword())));
+
+        id = loginResponse.then()
+                .statusCode(200)
+                .and()
+                .assertThat().body("id", notNullValue())
+                .extract().path("id");
     }
 
     @Test
@@ -82,10 +101,24 @@ public class CreatingCourierTests {
                 .and()
                 .assertThat().body("ok", equalTo(true));
 
+
+        Response loginResponse = CourierSteps.loginCourier((new LoginCourier(request.getLogin(), request.getPassword())));
+
+        id = loginResponse.then()
+                .statusCode(200)
+                .and()
+                .assertThat().body("id", notNullValue())
+                .extract().path("id");
+
         Response errorResponse = CourierSteps.createCourier(request);
         errorResponse.then()
                 .statusCode(409)
                 .and()
                 .assertThat().body("message", equalTo(REGISTER_ERROR_409));
+
+    }
+    @After
+    public void tearDown() {
+        if (id != 0) deleteCourier(id);
     }
 }

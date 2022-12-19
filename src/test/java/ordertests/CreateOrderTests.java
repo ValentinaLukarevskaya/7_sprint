@@ -1,4 +1,4 @@
-package orderTests;
+package ordertests;
 
 import generatingclasses.GeneratingOrder;
 import io.qameta.allure.Description;
